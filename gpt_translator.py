@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 class GPTTranslator:
     def __init__(self):
         # Use the user's provided API configuration
-        self.api_key = os.getenv("OPENAI_API_KEY", "32654f959e4c4c4287db76beea8dcd90")
+        self.api_key = os.getenv("OPENAI_API_KEY", "32654f959e4....")
         self.client = OpenAI(
             base_url="https://api.aimlapi.com/v1",
             api_key=self.api_key,
@@ -89,7 +89,7 @@ class GPTTranslator:
                 prompt = f"Translate the following {source_language} text to {target_language}. Preserve the original meaning and tone. Only return the translated text, nothing else:\n\n{text}"
             
             response = self.client.chat.completions.create(
-                model="openai/gpt-5-2025-08-07",
+                model="openai/gpt-5",
                 messages=[
                     {
                         "role": "system",
