@@ -1,15 +1,4 @@
-# Byte-compiled / cache
-__pycache__/
-*.py[cod]
-
-# Virtual environment
-venv/
-.env/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
+*.mp4
+*.wav
+*.srt
+*.txt
