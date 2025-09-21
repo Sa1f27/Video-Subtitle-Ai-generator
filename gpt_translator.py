@@ -83,22 +83,25 @@ class GPTTranslator:
             source_language = lang_map.get(source_lang, source_lang)
             target_language = lang_map.get(target_lang, target_lang)
             
-            if source_lang == 'auto':
-                prompt = f"Translate the following text to {target_language}. Preserve the original meaning and tone. Only return the translated text, nothing else:\n\n{text}"
-            else:
-                prompt = f"Translate the following {source_language} text to {target_language}. Preserve the original meaning and tone. Only return the translated text, nothing else:\n\n{text}"
-            
+            system_prompt = (
+                "You are an expert translator specializing in video subtitles. "
+                "Your task is to translate the user's text accurately and concisely, "
+                "preserving the original meaning, tone, and context. "
+                "The translation should be natural-sounding and suitable for on-screen display. "
+                "Return ONLY the translated text, without any additional explanations or introductory phrases."
+            )
+
+            user_prompt = (
+                f"Source Language: {source_language}\n"
+                f"Target Language: {target_language}\n"
+                f"Text to translate:\n\n---\n{text}\n---"
+            )
+
             response = self.client.chat.completions.create(
                 model="openai/gpt-5",
                 messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a professional translator. Translate text accurately while preserving meaning, tone, and context. Return only the translated text without any additional commentary."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
                 ],
                 max_tokens=1000,
                 temperature=0.3
