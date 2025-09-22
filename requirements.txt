@@ -1,2 +1,9 @@
-numpy
-pandas
+flask
+werkzeug
+requests
+pydub
+yt-dlp
+openai
+srt
+ffmpeg-python
+aiml
