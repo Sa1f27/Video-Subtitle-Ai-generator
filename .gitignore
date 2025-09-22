@@ -2,3 +2,6 @@
 *.wav
 *.srt
 *.txt
+.gitignore
+__pycache__/
+venv/
