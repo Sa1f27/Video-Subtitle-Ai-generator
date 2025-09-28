@@ -5,3 +5,8 @@
 .gitignore
 __pycache__/
 venv/
+data_processed/
+data_srt/
+data_uploads/
+data_audio/
+repl_nix_workspace.egg-info/
