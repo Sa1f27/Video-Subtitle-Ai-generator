@@ -1,17 +1,13 @@
-import os
 import logging
-from openai import OpenAI
+from groq import Groq
 
 logger = logging.getLogger(__name__)
 
 class GPTTranslator:
     def __init__(self):
-        # Use the user's provided API configuration
-        self.api_key = os.getenv("OPENAI_API_KEY", "32654f959e4....")
-        self.client = OpenAI(
-            base_url="https://api.aimlapi.com/v1",
-            api_key=self.api_key,
-        )
+        self.client = Groq()
+        if not self.client.api_key:
+            raise Exception("GROQ_API_KEY environment variable not set")
     
     def translate_segments(self, segments, source_lang, target_lang):
         """Translate all speech segments"""
@@ -61,7 +57,7 @@ class GPTTranslator:
             raise Exception(f"Failed to translate segments: {str(e)}")
     
     def translate_text(self, text, source_lang, target_lang):
-        """Translate a single text using GPT-5"""
+        """Translate a single text using Groq API"""
         try:
             # Map language codes to full names for better GPT understanding
             lang_map = {
@@ -98,23 +94,30 @@ class GPTTranslator:
             )
 
             response = self.client.chat.completions.create(
-                model="openai/gpt-5",
+                model="openai/gpt-oss-20b",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt},
                 ],
-                max_tokens=1000,
-                temperature=0.3
+                temperature=1,
+                max_completion_tokens=8192,
+                top_p=1,
+                reasoning_effort="medium",
+                stream=True,
+                stop=None
             )
             
-            translated_text = response.choices[0].message.content
+            translated_text = ""
+            for chunk in response:
+                translated_text += chunk.choices[0].delta.content or ""
+
             if translated_text:
                 return translated_text.strip()
             else:
                 return text
             
         except Exception as e:
-            logger.error(f"GPT translation error: {str(e)}")
+            logger.error(f"Groq translation error: {str(e)}")
             # Return original text if translation fails
             return text
     

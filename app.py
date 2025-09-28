@@ -121,6 +121,12 @@ def upload_video():
         print(f"💥 Upload failed: {str(e)}")
         return jsonify({'error': f'Upload failed: {str(e)}'}), 500
 
+# Generic error handler for unhandled exceptions
+@app.errorhandler(500)
+def handle_internal_error(error):
+    logger.error(f"Internal Server Error: {error}")
+    return jsonify(error="An internal server error occurred. Please check the server logs."), 500
+
 # Error handler for file too large
 @app.errorhandler(413)
 def request_entity_too_large(error):

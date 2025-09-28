@@ -125,6 +125,7 @@ class SubtitleGenerator:
                     return srt_path, txt_path
                 else:
                     logger.error(f"FFmpeg drawtext error: {result.stderr}")
+                    print(f"FFmpeg drawtext error: {result.stderr}")
 
             # Fallback: try with SRT file approach
             cmd_srt = [
@@ -142,6 +143,7 @@ class SubtitleGenerator:
                 return srt_path, txt_path
             else:
                 logger.error(f"FFmpeg SRT error: {result.stderr}")
+                print(f"FFmpeg SRT error: {result.stderr}")
 
                 # Final fallback - copy video without subtitles but keep SRT
                 cmd_simple = [
