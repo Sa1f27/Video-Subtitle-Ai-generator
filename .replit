@@ -6,7 +6,7 @@ packages = ["ffmpeg", "ffmpeg-full", "imagemagickBig", "openssl", "postgresql", 
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+run = ["gunicorn", "--bind", "0.0.0.0:8001", "main:app"]
 
 [workflows]
 runButton = "Project"
@@ -26,7 +26,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "gunicorn --bind 0.0.0.0:5000 --reuse-port --reload main:app"
+args = "gunicorn --bind 0.0.0.0:8001 --reuse-port --reload main:app"
 waitForPort = 5000
 
 [[ports]]
@@ -34,4 +34,4 @@ localPort = 5000
 externalPort = 80
 
 [agent]
-integrations = ["python_openai==1.0.0"]
+integrations = ["python_openai==2.0.0"]
