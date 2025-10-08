@@ -1,6 +1,6 @@
 # Vid-Sub: AI Subtitle Generator
 
-This automatically generates and embeds subtitles into videos. Users can upload a video file or provide a video URL, and the application will transcribe the audio, translate it to a specified language, and burn the subtitles into the video.
+This project is a web-based application that automatically generates and embeds subtitles into videos. Users can upload a video file or provide a video URL, and the application will transcribe the audio, translate it to a specified language, and burn the subtitles into the video.
 
 ## Project Overview
 
